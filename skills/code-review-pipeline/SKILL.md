@@ -38,6 +38,28 @@ Skill này chạy một **dây chuyền 5 bước** liên tục, mỗi bước C
 
 ---
 
+## Chế độ chạy Pipeline
+
+Ngay sau khi in header pipeline, **hỏi người dùng chọn chế độ chạy** trước khi bắt đầu Bước 1:
+
+```
+Chọn chế độ chạy:
+  [S] Step-by-step — Dừng hỏi khi gặp gate FAILED/REJECT
+  [A] Auto Accept  — Tự động chọn "tiếp tục + xem gợi ý fix" ở mọi gate
+                     (trừ vấn đề Critical/Security → vẫn dừng hỏi)
+```
+
+Chờ người dùng chọn.
+
+**Quy tắc Auto Accept:**
+- Khi gate FAILED/REJECT: tự động chọn option "Xem gợi ý fix rồi tiếp tục" (tương đương chọn A), in thêm dòng `⚡ Auto Accept: tiếp tục với gợi ý fix` rồi chạy tiếp.
+- **Safeguard bắt buộc**: Nếu phát hiện vấn đề thuộc nhóm sau thì **PHẢI dừng hỏi** dù đang Auto Accept:
+  - Security vulnerability (SQL injection, XSS, credential leak, v.v.)
+  - Critical bug gây mất dữ liệu hoặc crash hệ thống
+  - Khi dừng, in: `⛔ Auto Accept tạm dừng — phát hiện vấn đề [Critical/Security] cần bạn xác nhận.`
+
+---
+
 ## Hướng dẫn thực thi từng bước
 
 ### Trước khi bắt đầu — Đọc input
@@ -113,6 +135,10 @@ Nếu code thực tế có vấn đề rõ ràng (syntax error, hardcoded secret
 Nếu chỉ có mô tả: mặc định PASSED trừ khi mô tả đề cập vấn đề kỹ thuật.
 
 **Xử lý khi FAILED:**
+
+Nếu đang **Auto Accept** và không phải Critical/Security → in `⚡ Auto Accept: tiếp tục với gợi ý fix`, đưa gợi ý fix, giả định đã fix, chạy tiếp.
+
+Nếu đang **Step-by-step** hoặc gặp Critical/Security:
 ```
 ⛔ CI/CD FAILED — Pipeline dừng tại đây.
 
@@ -162,6 +188,10 @@ Nếu có code thực tế: nhận xét dựa trên code thực. Nếu chỉ mô
 Các tiêu chí luôn kiểm tra: correctness, performance (N+1, vòng lặp thừa), security (injection, exposure), naming, error handling, test coverage.
 
 **Xử lý khi REQUEST CHANGES:**
+
+Nếu đang **Auto Accept** và không phải Critical/Security → in `⚡ Auto Accept: tiếp tục với gợi ý sửa`, đưa gợi ý sửa, giả định đã fix, chạy tiếp.
+
+Nếu đang **Step-by-step** hoặc gặp Critical/Security:
 ```
 🔄 REQUEST CHANGES — [X] vấn đề cần sửa trước khi approve.
 
@@ -207,6 +237,10 @@ Với code thực tế: thiết kế test case dựa trên logic code. Với mô
 Luôn có ít nhất: 1 happy path, 1 negative case, 1 edge/boundary case.
 
 **Xử lý khi phát hiện bug:**
+
+Nếu đang **Auto Accept** và bug không phải Critical/Security → in `⚡ Auto Accept: giả định đã fix, tiếp tục`, chạy tiếp.
+
+Nếu đang **Step-by-step** hoặc bug là Critical/Security:
 ```
 ❌ QC FAILED — Phát hiện [N] bug cần fix.
 

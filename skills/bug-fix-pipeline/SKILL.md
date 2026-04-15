@@ -39,6 +39,28 @@ Skill nhận bug report từ Tester, chạy tuần tự **6 bước**, mỗi bư
 
 ---
 
+## Chế độ chạy Pipeline
+
+Ngay sau khi in header pipeline, **hỏi người dùng chọn chế độ chạy** trước khi bắt đầu Bước 1:
+
+```
+Chọn chế độ chạy:
+  [S] Step-by-step — Dừng hỏi khi gặp gate FAILED/REJECT
+  [A] Auto Accept  — Tự động chọn "tiếp tục + xem gợi ý fix" ở mọi gate
+                     (trừ vấn đề Critical/Security → vẫn dừng hỏi)
+```
+
+Chờ người dùng chọn.
+
+**Quy tắc Auto Accept:**
+- Khi gate FAILED/REJECT: tự động chọn option "Xem gợi ý fix rồi tiếp tục" (tương đương chọn A), in thêm dòng `⚡ Auto Accept: tiếp tục với gợi ý fix` rồi chạy tiếp.
+- **Safeguard bắt buộc**: Nếu phát hiện vấn đề thuộc nhóm sau thì **PHẢI dừng hỏi** dù đang Auto Accept:
+  - Security vulnerability (SQL injection, XSS, credential leak, v.v.)
+  - Critical bug gây mất dữ liệu hoặc crash hệ thống
+  - Khi dừng, in: `⛔ Auto Accept tạm dừng — phát hiện vấn đề [Critical/Security] cần bạn xác nhận.`
+
+---
+
 ## Trước khi bắt đầu — Đọc và chuẩn hoá input
 
 Xác định những gì có trong input:
@@ -201,6 +223,10 @@ Gate: ✅ APPROVED  /  🔄 REQUEST CHANGES ([N] blocking)
 ```
 
 **Xử lý khi REQUEST CHANGES:**
+
+Nếu đang **Auto Accept** và không phải Critical/Security → in `⚡ Auto Accept: tiếp tục với fix cải tiến`, đưa fix cải tiến, chạy tiếp.
+
+Nếu đang **Step-by-step** hoặc gặp Critical/Security:
 ```
 🔄 REQUEST CHANGES — Fix chưa đủ hoặc sai hướng.
 
@@ -243,6 +269,10 @@ Gate: ✅ RETEST PASSED — Bug fixed, không có regression
 ```
 
 **Xử lý khi RETEST FAILED:**
+
+Nếu đang **Auto Accept** và không phải Critical/Security → in `⚡ Auto Accept: phân tích lại từ Bước 2`, tự động quay lại Bước 2 với thông tin mới.
+
+Nếu đang **Step-by-step** hoặc gặp Critical/Security:
 ```
 ❌ RETEST FAILED — Bug vẫn còn hoặc fix gây regression.
 

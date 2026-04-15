@@ -1,83 +1,43 @@
-# Claude Skills — Outsource Project Roles
+# Skills Package v2.0
 
-Bộ skill mô phỏng toàn bộ quy trình phát triển phần mềm outsource
-theo chuẩn FPT / CMMI / Agile.
+**Ngày build:** 2026-04-15
+
+## Danh sách Skills (8)
+
+| # | Skill | Mô tả |
+|---|-------|--------|
+| 1 | `ba-role` | Business Analyst, Solution Architect, System Analyst |
+| 2 | `bug-fix-pipeline` | Pipeline xử lý bug 6 bước (v2 — Auto Accept) |
+| 3 | `code-review-pipeline` | Pipeline review code 5 bước (v2 — Auto Accept) |
+| 4 | `dev-role` | Tech Lead, Senior/Junior Dev, DevOps, DBA, Security |
+| 5 | `google-play-aso` | App Store Optimization cho Google Play |
+| 6 | `ops-role` | Release Manager, SysAdmin, SRE, Technical Support |
+| 7 | `pm-role` | Project Manager, Scrum Master, Delivery Manager |
+| 8 | `qa-qc-role` | QA Lead, QC Engineer, Automation, Performance Test |
 
 ## Cài đặt
 
+### Cách 1 — Script tự động
+
 ```bash
-# 1. Giải nén (nếu nhận dạng .zip)
-unzip claude-skills.zip
-cd claude-skills/
-
-# 2. Cấp quyền chạy
 chmod +x install.sh
-
-# 3. Chạy installer
-./install.sh
+./install.sh                           # Cài vào /mnt/skills/user (mặc định)
+./install.sh /đường/dẫn/tuỳ/chỉnh     # Cài vào thư mục tuỳ chọn
 ```
 
-Sau khi cài xong, khởi động lại Claude để skills có hiệu lực.
+### Cách 2 — Thủ công
 
----
+Copy từng thư mục trong `skills/` vào nơi lưu skill của Claude Project.
 
-## Danh sách skills
+## Gỡ cài đặt
 
-### Vai trò đơn lẻ
-
-| Skill | Trigger | Mô tả |
-|---|---|---|
-| `pm-role` | "với tư cách PM..." | Project Manager, Scrum Master, PMO |
-| `ba-role` | "viết requirement..." | Business Analyst, Solution Architect |
-| `dev-role` | "với tư cách Tech Lead..." | Dev team, DevOps, DBA |
-| `qa-qc-role` | "viết test case..." | QA/QC, Automation, Performance |
-| `ops-role` | "kế hoạch go-live..." | Release Manager, SRE, Support |
-
-### Pipeline tự động (orchestrator)
-
-| Skill | Trigger | Mô tả |
-|---|---|---|
-| `bug-fix-pipeline` | "xử lý bug này..." | Triage → Root cause → Fix → Retest → Close |
-| `code-review-pipeline` | "chạy pipeline cho code này..." | Self-review → CI/CD → Review → QC → Approve |
-
----
-
-## Luồng kết hợp hai pipeline
-
-```
-Tester gửi bug report
-        │
-        ▼
-  bug-fix-pipeline          ← "xử lý bug này: [bug report]"
-  (6 bước tự động)
-        │
-        ▼ pipeline tự gợi ý
-  code-review-pipeline      ← "chạy pipeline cho code fix này"
-  (5 bước tự động)
-        │
-        ▼
-  Sẵn sàng deploy production
+```bash
+chmod +x uninstall.sh
+./uninstall.sh                         # Gỡ từ /mnt/skills/user (mặc định)
+./uninstall.sh /đường/dẫn/tuỳ/chỉnh
 ```
 
----
+## Changelog
 
-## Cấu trúc thư mục sau cài đặt
-
-```
-~/.claude/
-└── skills/
-    ├── pm-role/
-    │   └── SKILL.md
-    ├── ba-role/
-    │   └── SKILL.md
-    ├── dev-role/
-    │   └── SKILL.md
-    ├── qa-qc-role/
-    │   └── SKILL.md
-    ├── ops-role/
-    │   └── SKILL.md
-    ├── code-review-pipeline/
-    │   └── SKILL.md
-    └── bug-fix-pipeline/
-        └── SKILL.md
-```
+- **v2.0** (2026-04-15): Thêm Auto Accept mode cho `bug-fix-pipeline` và `code-review-pipeline`
+- **v1.0**: Bản gốc

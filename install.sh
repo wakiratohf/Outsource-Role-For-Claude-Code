@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ═══════════════════════════════════════════════════════════
-#  SKILLS INSTALLER v2.2
+#  SKILLS INSTALLER v2.3
 #  Cài đặt custom skills cho Claude Code / Claude Desktop
 #  Target: ~/.claude/skills/
 #  Ngày build: 2026-04-15
@@ -35,12 +35,13 @@ SKILLS=(
   "ops-role|Release Manager / SysAdmin / SRE"
   "pm-role|Project Manager / Scrum Master"
   "qa-qc-role|QA Lead / QC Engineer / Automation"
+  "tech-lead-review|Tech Lead Review (standalone verify)"
 )
 TOTAL=${#SKILLS[@]}
 
 echo ""
 echo -e "${CYAN}═══════════════════════════════════════════════════════════${NC}"
-echo -e "${BOLD}  SKILLS INSTALLER v2.2 — Linux / macOS${NC}"
+echo -e "${BOLD}  SKILLS INSTALLER v2.3 — Linux / macOS${NC}"
 echo -e "${CYAN}═══════════════════════════════════════════════════════════${NC}"
 echo ""
 echo -e "  Skills:  ${BOLD}${TOTAL}${NC} skills"

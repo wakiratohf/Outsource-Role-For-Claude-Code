@@ -333,6 +333,7 @@ Action:
 - **Có code thực tế**: nhận xét cụ thể và hữu ích. Đây là điểm giá trị nhất của skill.
 - **Chỉ có mô tả**: vẫn tạo ra output có cấu trúc thực tế, không nói chung chung.
 - **Ngôn ngữ**: tiếng Việt cho giải thích, thuật ngữ kỹ thuật giữ tiếng Anh.
+- **Tham chiếu code (clickable path)**: Khi nhắc đến class/method/file — nếu đã đọc file thực tế thì format `path/to/File.kt:42` để IDE cho click nhảy thẳng đến. Nếu chỉ suy đoán từ mô tả thì dùng FQN text thường, không giả vờ biết path.
 
 ---
 

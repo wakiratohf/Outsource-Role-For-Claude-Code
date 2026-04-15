@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ═══════════════════════════════════════════════════════════
-#  SKILLS UNINSTALLER v2.2 — Linux / macOS
+#  SKILLS UNINSTALLER v2.3 — Linux / macOS
 # ═══════════════════════════════════════════════════════════
 
 set -e
@@ -20,11 +20,11 @@ else
   TARGET_DIR="$CLAUDE_HOME/skills"
 fi
 
-SKILLS=("ba-role" "bug-fix-pipeline" "code-review-pipeline" "dev-role" "google-play-aso" "ops-role" "pm-role" "qa-qc-role")
+SKILLS=("ba-role" "bug-fix-pipeline" "code-review-pipeline" "dev-role" "google-play-aso" "ops-role" "pm-role" "qa-qc-role" "tech-lead-review")
 
 echo ""
 echo -e "${CYAN}═══════════════════════════════════════════════════════════${NC}"
-echo -e "${BOLD}  SKILLS UNINSTALLER v2.2 — Linux / macOS${NC}"
+echo -e "${BOLD}  SKILLS UNINSTALLER v2.3 — Linux / macOS${NC}"
 echo -e "${CYAN}═══════════════════════════════════════════════════════════${NC}"
 echo ""
 echo -e "  Target: ${BOLD}$TARGET_DIR${NC}"

@@ -1,4 +1,4 @@
-# Skills Package v2.0
+# Skills Package v2.1
 
 **Ngày build:** 2026-04-15
 
@@ -15,29 +15,61 @@
 | 7 | `pm-role` | Project Manager, Scrum Master, Delivery Manager |
 | 8 | `qa-qc-role` | QA Lead, QC Engineer, Automation, Performance Test |
 
+---
+
 ## Cài đặt
 
-### Cách 1 — Script tự động
+### Linux / macOS
 
 ```bash
 chmod +x install.sh
-./install.sh                           # Cài vào /mnt/skills/user (mặc định)
-./install.sh /đường/dẫn/tuỳ/chỉnh     # Cài vào thư mục tuỳ chọn
+./install.sh                        # → ~/.claude/skills/
+./install.sh /đường/dẫn/tuỳ/chọn   # → thư mục tuỳ chọn
 ```
 
-### Cách 2 — Thủ công
+### Windows
 
-Copy từng thư mục trong `skills/` vào nơi lưu skill của Claude Project.
+```
+install.bat                         # → %USERPROFILE%\.claude\skills\
+install.bat C:\đường\dẫn\tuỳ\chọn  # → thư mục tuỳ chọn
+```
+
+Hoặc nhấp đúp (double-click) file `install.bat`.
+
+### Claude.ai (Web) / Claude Desktop (UI)
+
+Nếu cài qua giao diện thay vì CLI:
+1. Vào **Settings → Customize → Skills → "+"**
+2. Chọn **Upload skill**
+3. Upload từng file `.zip` trong thư mục `zips/`
+4. Mỗi skill là 1 file zip riêng
+
+### Thư mục cài đặt mặc định
+
+| Platform | Đường dẫn |
+|----------|-----------|
+| Linux / macOS | `~/.claude/skills/` |
+| Windows | `%USERPROFILE%\.claude\skills\` |
+| Custom (env var) | `$CLAUDE_CONFIG_DIR/skills/` |
+| Project-level | `.claude/skills/` (trong repo) |
+
+---
 
 ## Gỡ cài đặt
 
 ```bash
+# Linux / macOS
 chmod +x uninstall.sh
-./uninstall.sh                         # Gỡ từ /mnt/skills/user (mặc định)
-./uninstall.sh /đường/dẫn/tuỳ/chỉnh
+./uninstall.sh
+
+# Windows
+uninstall.bat
 ```
+
+---
 
 ## Changelog
 
+- **v2.1** (2026-04-15): Cross-platform (Windows + Linux/macOS), target `~/.claude/skills/`, thêm zip cho UI upload
 - **v2.0** (2026-04-15): Thêm Auto Accept mode cho `bug-fix-pipeline` và `code-review-pipeline`
 - **v1.0**: Bản gốc

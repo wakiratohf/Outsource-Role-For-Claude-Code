@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # ═══════════════════════════════════════════════════════════
-#  SKILLS UNINSTALLER v2.0
-#  Gỡ cài đặt tất cả custom skills
+#  SKILLS UNINSTALLER v2.1 — Linux / macOS
 # ═══════════════════════════════════════════════════════════
 
 set -e
@@ -14,44 +13,34 @@ CYAN='\033[0;36m'
 BOLD='\033[1m'
 NC='\033[0m'
 
-TARGET_DIR="${1:-/mnt/skills/user}"
+if [ -n "$1" ]; then
+  TARGET_DIR="$1"
+else
+  CLAUDE_HOME="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
+  TARGET_DIR="$CLAUDE_HOME/skills"
+fi
 
-SKILLS=(
-  "ba-role"
-  "bug-fix-pipeline"
-  "code-review-pipeline"
-  "dev-role"
-  "google-play-aso"
-  "ops-role"
-  "pm-role"
-  "qa-qc-role"
-)
+SKILLS=("ba-role" "bug-fix-pipeline" "code-review-pipeline" "dev-role" "google-play-aso" "ops-role" "pm-role" "qa-qc-role")
 
 echo ""
 echo -e "${CYAN}═══════════════════════════════════════════════════════════${NC}"
-echo -e "${BOLD}  SKILLS UNINSTALLER v2.0${NC}"
+echo -e "${BOLD}  SKILLS UNINSTALLER v2.1 — Linux / macOS${NC}"
 echo -e "${CYAN}═══════════════════════════════════════════════════════════${NC}"
 echo ""
 echo -e "  Target: ${BOLD}$TARGET_DIR${NC}"
 echo ""
 
-# Liệt kê skills sẽ bị gỡ
-echo -e "  ${BOLD}Sẽ gỡ các skills sau:${NC}"
+echo -e "  ${BOLD}Sẽ gỡ:${NC}"
 for SKILL in "${SKILLS[@]}"; do
-  if [ -d "$TARGET_DIR/$SKILL" ]; then
-    echo -e "    ${RED}✗${NC} $SKILL"
-  else
-    echo -e "    ${YELLOW}–${NC} $SKILL (không tồn tại)"
-  fi
+  [ -d "$TARGET_DIR/$SKILL" ] \
+    && echo -e "    ${RED}✗${NC} $SKILL" \
+    || echo -e "    ${YELLOW}–${NC} $SKILL (không tồn tại)"
 done
 
 echo ""
-echo -e "  ${RED}${BOLD}CẢNH BÁO: Thao tác này không thể hoàn tác!${NC}"
-read -p "  Xác nhận gỡ cài đặt? [y/N] " CONFIRM
-if [[ ! "$CONFIRM" =~ ^[Yy]$ ]]; then
-  echo -e "\n  ${YELLOW}Đã huỷ.${NC}"
-  exit 0
-fi
+echo -e "  ${RED}${BOLD}CẢNH BÁO: Không thể hoàn tác!${NC}"
+read -p "  Xác nhận gỡ? [y/N] " CONFIRM
+[[ ! "$CONFIRM" =~ ^[Yy]$ ]] && echo -e "\n  ${YELLOW}Đã huỷ.${NC}" && exit 0
 
 echo ""
 REMOVED=0

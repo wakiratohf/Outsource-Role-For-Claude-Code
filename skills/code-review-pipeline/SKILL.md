@@ -38,9 +38,9 @@ Skill này chạy một **dây chuyền 5 bước** liên tục, mỗi bước C
 
 ---
 
-## Chế độ chạy Pipeline
+## Chế độ chạy Pipeline (sau khi Discovery được xác nhận)
 
-Ngay sau khi in header pipeline, **hỏi người dùng chọn chế độ chạy** trước khi bắt đầu Bước 1:
+Sau khi người dùng xác nhận OK ở giai đoạn Discovery, **hỏi chọn chế độ chạy**:
 
 ```
 Chọn chế độ chạy:
@@ -76,6 +76,45 @@ In ra dòng header trước khi chạy:
  Loại input: [Code thực tế / Mô tả]
 ═══════════════════════════════════════════
 ```
+
+---
+
+### Giai đoạn 0 — Chuẩn đoán & Xác nhận (Discovery)
+
+**Mục đích:** Hiểu đúng vấn đề, thống nhất giải pháp trước khi chạy pipeline. Không bắt đầu pipeline cho đến khi người dùng xác nhận OK.
+
+**Claude thực hiện:**
+1. Duyệt code/mô tả được cung cấp
+2. Liệt kê các vấn đề phát hiện được (nếu có code thực tế: chỉ rõ file, dòng, logic lỗi)
+3. Đề xuất hướng xử lý / cải thiện cho từng vấn đề
+4. Hỏi người dùng xác nhận
+
+**Format output bắt buộc:**
+```
+── CHUẨN ĐOÁN ─ 🔎 Discovery & Alignment ─────────────
+
+Phân tích code/thay đổi:
+  [Tóm tắt ngắn gọn: code này làm gì, thay đổi gì]
+
+Vấn đề phát hiện:
+  1. [Vấn đề — mô tả cụ thể, chỉ file/dòng nếu có code]
+     → Đề xuất: [Cách xử lý]
+  2. [Vấn đề]
+     → Đề xuất: [Cách xử lý]
+  ...
+
+Đánh giá tổng quan:
+  [Nhận xét chung về chất lượng, rủi ro, mức độ ảnh hưởng]
+
+→ Bạn muốn:
+  [OK] Xác nhận — bắt đầu chạy pipeline
+  [?]  Trao đổi thêm — cần bổ sung hoặc điều chỉnh
+```
+
+**Quy tắc:**
+- Nếu người dùng chọn **trao đổi thêm**: tiếp tục thảo luận, cập nhật chuẩn đoán theo phản hồi, rồi hỏi xác nhận lại. Lặp lại cho đến khi người dùng xác nhận OK.
+- Nếu người dùng chọn **OK**: chuyển sang chọn chế độ chạy (Step-by-step / Auto Accept), rồi bắt đầu pipeline.
+- **Không bao giờ** bắt đầu Bước 1 nếu chưa có xác nhận từ người dùng ở giai đoạn này.
 
 ---
 

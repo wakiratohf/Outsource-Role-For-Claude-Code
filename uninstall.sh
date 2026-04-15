@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ═══════════════════════════════════════════════════════════
-#  SKILLS UNINSTALLER v2.1 — Linux / macOS
+#  SKILLS UNINSTALLER v2.2 — Linux / macOS
 # ═══════════════════════════════════════════════════════════
 
 set -e
@@ -24,7 +24,7 @@ SKILLS=("ba-role" "bug-fix-pipeline" "code-review-pipeline" "dev-role" "google-p
 
 echo ""
 echo -e "${CYAN}═══════════════════════════════════════════════════════════${NC}"
-echo -e "${BOLD}  SKILLS UNINSTALLER v2.1 — Linux / macOS${NC}"
+echo -e "${BOLD}  SKILLS UNINSTALLER v2.2 — Linux / macOS${NC}"
 echo -e "${CYAN}═══════════════════════════════════════════════════════════${NC}"
 echo ""
 echo -e "  Target: ${BOLD}$TARGET_DIR${NC}"

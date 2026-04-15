@@ -39,9 +39,9 @@ Skill nhận bug report từ Tester, chạy tuần tự **6 bước**, mỗi bư
 
 ---
 
-## Chế độ chạy Pipeline
+## Chế độ chạy Pipeline (sau khi Discovery được xác nhận)
 
-Ngay sau khi in header pipeline, **hỏi người dùng chọn chế độ chạy** trước khi bắt đầu Bước 1:
+Sau khi người dùng xác nhận OK ở giai đoạn Discovery, **hỏi chọn chế độ chạy**:
 
 ```
 Chọn chế độ chạy:
@@ -78,6 +78,49 @@ In header trước khi chạy:
  Input: [Mô tả / Code / Log / Kết hợp]
 ═══════════════════════════════════════════
 ```
+
+---
+
+### Giai đoạn 0 — Chuẩn đoán & Xác nhận (Discovery)
+
+**Mục đích:** Phân tích bug, xác định hướng fix trước khi chạy pipeline. Không bắt đầu pipeline cho đến khi người dùng xác nhận OK.
+
+**Claude thực hiện:**
+1. Duyệt bug report / code / log được cung cấp
+2. Đưa ra giả thuyết root cause (chỉ rõ file, dòng, logic nếu có code)
+3. Đề xuất hướng fix chi tiết cho từng vấn đề
+4. Đánh giá mức độ ảnh hưởng và rủi ro
+5. Hỏi người dùng xác nhận
+
+**Format output bắt buộc:**
+```
+── CHUẨN ĐOÁN ─ 🔎 Discovery & Alignment ─────────────
+
+Phân tích bug:
+  [Tóm tắt: bug gì, biểu hiện ra sao, ảnh hưởng ai]
+
+Root cause giả định:
+  1. [Nguyên nhân — mô tả kỹ thuật, chỉ file/dòng nếu có code]
+     → Hướng fix: [Cách xử lý chi tiết]
+  2. [Nguyên nhân thay thế nếu có]
+     → Hướng fix: [Cách xử lý]
+
+Scope ảnh hưởng:
+  [Module nào bị ảnh hưởng, fix có thể gây side effect gì]
+
+Đánh giá sơ bộ:
+  Severity dự kiến: [Critical / Major / Minor]
+  Estimate fix:     [X giờ / X ngày]
+
+→ Bạn muốn:
+  [OK] Xác nhận — bắt đầu chạy pipeline
+  [?]  Trao đổi thêm — cần bổ sung hoặc điều chỉnh
+```
+
+**Quy tắc:**
+- Nếu người dùng chọn **trao đổi thêm**: tiếp tục thảo luận, cập nhật chuẩn đoán theo phản hồi, rồi hỏi xác nhận lại. Lặp lại cho đến khi người dùng xác nhận OK.
+- Nếu người dùng chọn **OK**: chuyển sang chọn chế độ chạy (Step-by-step / Auto Accept), rồi bắt đầu pipeline.
+- **Không bao giờ** bắt đầu Bước 1 nếu chưa có xác nhận từ người dùng ở giai đoạn này.
 
 ---
 

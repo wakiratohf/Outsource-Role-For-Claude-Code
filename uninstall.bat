@@ -3,7 +3,8 @@ chcp 65001 >nul 2>&1
 setlocal enabledelayedexpansion
 
 :: ═══════════════════════════════════════════════════════════
-::  SKILLS UNINSTALLER v2.1 — Windows
+::  SKILLS UNINSTALLER v2.4
+::  Go cai dat custom skills
 :: ═══════════════════════════════════════════════════════════
 
 if not "%~1"=="" (
@@ -16,6 +17,7 @@ if not "%~1"=="" (
     )
 )
 
+set TOTAL=9
 set "SKILL[1]=ba-role"
 set "SKILL[2]=bug-fix-pipeline"
 set "SKILL[3]=code-review-pipeline"
@@ -24,50 +26,51 @@ set "SKILL[5]=google-play-aso"
 set "SKILL[6]=ops-role"
 set "SKILL[7]=pm-role"
 set "SKILL[8]=qa-qc-role"
-set TOTAL=8
+set "SKILL[9]=tech-lead-review"
 
 echo.
-echo ═══════════════════════════════════════════════════════════
-echo   SKILLS UNINSTALLER v2.1 — Windows
-echo ═══════════════════════════════════════════════════════════
+echo ===============================================================
+echo   SKILLS UNINSTALLER v2.4 - Windows
+echo ===============================================================
 echo.
 echo   Target: %TARGET_DIR%
 echo.
 
-echo   Sẽ gỡ:
+echo   Se go cac skills sau:
 for /L %%i in (1,1,%TOTAL%) do (
     set "NAME=!SKILL[%%i]!"
     if exist "%TARGET_DIR%\!NAME!\" (
         echo     [X] !NAME!
     ) else (
-        echo     [-] !NAME! (không tồn tại)
+        echo     [-] !NAME! (khong ton tai)
     )
 )
 
 echo.
-echo   CẢNH BÁO: Không thể hoàn tác!
-set /p "CONFIRM=  Xác nhận gỡ? [y/N] "
-if /i not "%CONFIRM%"=="y" (
+echo   CANH BAO: Thao tac nay khong the hoan tac!
+set /p "CONFIRM=  Xac nhan go cai dat? [y/N] "
+if /i not "%CONFIRM%"=="Y" (
     echo.
-    echo   Đã huỷ.
+    echo   Da huy.
     pause
     exit /b 0
 )
 
 echo.
 set REMOVED=0
+
 for /L %%i in (1,1,%TOTAL%) do (
     set "NAME=!SKILL[%%i]!"
     if exist "%TARGET_DIR%\!NAME!\" (
-        rmdir /s /q "%TARGET_DIR%\!NAME!"
-        echo   [X] !NAME! — đã gỡ
+        rmdir /s /q "%TARGET_DIR%\!NAME!" >nul 2>&1
+        echo   [X] !NAME! - da go
         set /a REMOVED+=1
     )
 )
 
 echo.
-echo ═══════════════════════════════════════════════════════════
-echo   Đã gỡ !REMOVED! skills
-echo ═══════════════════════════════════════════════════════════
+echo ===============================================================
+echo   [V] Da go !REMOVED! skills
+echo ===============================================================
 echo.
 pause

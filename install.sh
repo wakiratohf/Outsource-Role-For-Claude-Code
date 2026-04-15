@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ═══════════════════════════════════════════════════════════
-#  SKILLS INSTALLER v2.3
+#  SKILLS INSTALLER v2.4
 #  Cài đặt custom skills cho Claude Code / Claude Desktop
 #  Target: ~/.claude/skills/
 #  Ngày build: 2026-04-15
@@ -41,7 +41,7 @@ TOTAL=${#SKILLS[@]}
 
 echo ""
 echo -e "${CYAN}═══════════════════════════════════════════════════════════${NC}"
-echo -e "${BOLD}  SKILLS INSTALLER v2.3 — Linux / macOS${NC}"
+echo -e "${BOLD}  SKILLS INSTALLER v2.4 — Linux / macOS${NC}"
 echo -e "${CYAN}═══════════════════════════════════════════════════════════${NC}"
 echo ""
 echo -e "  Skills:  ${BOLD}${TOTAL}${NC} skills"
